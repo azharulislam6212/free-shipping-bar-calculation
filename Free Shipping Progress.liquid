@@ -1,0 +1,59 @@
+              {%- assign totalCartAmoutnt = cart.total_price | money_without_currency | times: 1 -%} 
+              {%- assign free_shipping_rate = settings.free_shipping_rate -%} 
+              {%- assign value = free_shipping_rate | minus: totalCartAmoutnt -%}
+              {%- assign percentense =   totalCartAmoutnt | divided_by: free_shipping_rate | times: 100 -%}
+
+            
+
+              <div class="mini-cart__free text-center   {% if  totalCartAmoutnt >= free_shipping_rate %} is-free {% endif %} ">
+                <span class="title title--unfill">You are <span class="free-count">{{ free_shipping_rate | minus: totalCartAmoutnt | times: 100 | money }} </span> away from free shipping</span>
+                <span class="title title--fill">Congratulations, you've got free shipping!</span>
+                <div class="shipping-bar">
+                  <div class="shipping-bar--progress" style="width:{{percentense}}%;"></div>
+                </div> 
+              </div>
+
+
+<style>
+
+
+.mini-cart__free {
+    background: #F5F5F5;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.mini-cart__free .title {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: "Open Sans";
+    font-size: 14px;
+}
+
+.mini-cart__free .title--fill {
+    display: none;
+}
+
+.mini-cart__free .shipping-bar {
+    height: 3px;
+    background: #979797;
+    position: relative;
+}
+
+.mini-cart__free .shipping-bar--progress {
+    height: 3px;
+    background: #BC2F2C;
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+}
+.mini-cart__free.is-free .title {
+display: none;
+}
+.mini-cart__free.is-free .title--fill {
+    display: inline-block;
+}
+
+<style>
