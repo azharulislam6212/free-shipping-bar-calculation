@@ -25,11 +25,42 @@ being eligible for free shipping.
   endfor
 
   assign calculated_total_price = calculated_total_price | minus: total_cart_discount
+
+
+   assign percentense =   calculated_total_price | divided_by: settings.cart_free_shipping_threshold 
+
+
 -%}
 
 {%- if cart.requires_shipping -%}
   <free-shipping-bar class="free-shipping-bar" threshold="{{ settings.cart_free_shipping_threshold }}" total-price="{{ calculated_total_price }}" reached-message="{{ 'cart.free_shipping_bar.limit_reached_html' | t | escape }}" unreached-message="{{ 'cart.free_shipping_bar.limit_unreached_html' | t | escape }}">
     {%- comment -%}The span below is the placeholder where the content will be inserted in JS{%- endcomment -%}
     <span class="text-subdued">&nbsp;</span>
+
+    <div class="shipping-bar">
+      <div class="shipping-bar--progress" style="width:{{percentense}}%;"></div>
+    </div> 
+
   </free-shipping-bar>
 {%- endif -%}
+
+
+<style>
+
+.free-shipping-bar .shipping-bar {
+    height: 3px;
+    background: #979797;
+    position: relative;
+    border-radius: 20px;
+}
+
+.free-shipping-bar .shipping-bar--progress {
+    height: 3px;
+    background: #BC2F2C;
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    border-radius: 20px;
+}
+</style>
